@@ -218,17 +218,17 @@ func AddPodcast(url string) (db.Podcast, error) {
 			return db.Podcast{}, err
 		}
 
-        // Generate a unique folder name
- 	    folderName := cleanFileName(data.Channel.Title)
-	    uniqueFolderName := generateUniqueFolderName(folderName)
-	   
+        	// Generate a unique folder name
+        	folderName := cleanFileName(data.Channel.Title)
+        	uniqueFolderName := generateUniqueFolderName(folderName)
+		
 		podcast := db.Podcast{
 			Title:   data.Channel.Title,
 			Summary: strip.StripTags(data.Channel.Summary),
 			Author:  data.Channel.Author,
 			Image:   data.Channel.Image.URL,
 			URL:     url,
-            Folder:  uniqueFolderName,
+	                Folder:  uniqueFolderName,
 		}
 
 		if podcast.Image == "" {
@@ -245,21 +245,6 @@ func AddPodcast(url string) (db.Podcast, error) {
 
 	return podcast, &model.PodcastAlreadyExistsError{Url: url}
 
-}
-
-func generateUniqueFolderName(baseName string) string {
-	var podcast db.Podcast
-	folderName := baseName
-	counter := 1
-	
-	for {
-		err := db.GetPodcastByFolder(folderName, &podcast)
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return folderName
-		}
-		folderName = fmt.Sprintf("%s_%d", baseName, counter)
-		counter++
-	}
 }
 
 func AddPodcastItems(podcast *db.Podcast, newPodcast bool) error {
