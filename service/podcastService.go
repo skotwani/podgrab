@@ -220,7 +220,6 @@ func AddPodcast(url string) (db.Podcast, error) {
 
         	// Generate a unique folder name
         	folderName := cleanFileName(data.Channel.Title)
-        	uniqueFolderName := generateUniqueFolderName(folderName)
 		
 		podcast := db.Podcast{
 			Title:   data.Channel.Title,
@@ -228,7 +227,7 @@ func AddPodcast(url string) (db.Podcast, error) {
 			Author:  data.Channel.Author,
 			Image:   data.Channel.Image.URL,
 			URL:     url,
-	                Folder:  uniqueFolderName,
+	                Folder:  folderName,
 		}
 
 		if podcast.Image == "" {
