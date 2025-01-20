@@ -17,6 +17,8 @@ type Podcast struct {
 
 	URL string
 
+	Folder string
+
 	LastEpisode *time.Time
 
 	PodcastItems []PodcastItem
